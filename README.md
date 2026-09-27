@@ -2,23 +2,15 @@
 
 Node.js 20+ / pnpm 的 API 契约包。TypeScript 源码使用 ESM `import`/`export`，构建为 CommonJS；发布到 GitHub Packages，包内只有 `lib/`。
 
-## 安装与运行
+## 安装与构建
 
 ```sh
 pnpm install
 pnpm lint
 pnpm build
-node lib/apis/greeting/example-server.js
 ```
 
-另一个终端请求真实接口：
-
-```sh
-curl -i -X POST http://localhost:3001/greetings -H 'Content-Type: application/json' -d '{"name":"Ada","mood":"formal"}'
-curl -i -X POST http://localhost:3001/greetings -H 'Content-Type: application/json' -d '{"name":""}'
-```
-
-第一个请求返回 200、`{"message":"Good day, Ada."}`；第二个在 Zod 的 `min(1)` 校验处失败，返回 400。服务终端打印 `[greeting]` 对应的接收、验证与响应步骤，不输出请求内容。未知路径返回 404。`PORT` 可指定监听端口。
+本仓库只提供 API 契约与生成产物，不启动 HTTP 服务。`study-nodejs` 服务仓库消费此包并实现 `/greetings` 接口。
 
 ## 添加 API
 

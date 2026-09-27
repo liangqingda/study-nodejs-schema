@@ -2,18 +2,11 @@
 
 ## 目标与职责
 
-契约源码按职责分为 `apis/`（接口描述、请求/响应与示例 HTTP 服务）、`types/`（手写类型和生成类型）、`common/`（可复用守卫）、`scripts/`（构建期生成器）。根 `index.ts` 聚合三个公共入口。源文件用 ESM 语法书写，TypeScript 编译目标为 ES2015，模块格式为 CommonJS，并生成声明文件与 source map。Node 按 `moduleResolution: Node` 查找依赖；TypeScript 6 对 `baseUrl` 与旧 Node resolution 发出弃用诊断，因此当前配置设 `ignoreDeprecations: "6.0"`，将来升级 TypeScript 7 前须迁移。
+契约源码按职责分为 `apis/`（接口描述与请求/响应契约）、`types/`（手写类型和生成类型）、`common/`（可复用守卫）、`scripts/`（构建期生成器）。根 `index.ts` 聚合三个公共入口。源文件用 ESM 语法书写，TypeScript 编译目标为 ES2015，模块格式为 CommonJS，并生成声明文件与 source map。Node 按 `moduleResolution: Node` 查找依赖；TypeScript 6 对 `baseUrl` 与旧 Node resolution 发出弃用诊断，因此当前配置设 `ignoreDeprecations: "6.0"`，将来升级 TypeScript 7 前须迁移。
 
-## 请求如何走通
+## 契约如何消费
 
-`apis/greeting/index.ts` 的 `greetingRequestSchema` 是具名 `ZodObject`；`name` 会 trim 且不能为空，`mood` 可省略并限制为两个值。`defineApiInfo` 把 POST `/greetings`、请求体、响应、摘要和标签集中描述；未指定的 `retry` 和 `requiresAuth` 明确默认为 `false`。这两个字段是给消费者的契约元数据，不代表示例服务实现了重试或鉴权。`apis/greeting/example-server.ts` 接收请求、解析 JSON、用 schema 校验、调用 `handleGreeting`、校验响应并写出 JSON；非法输入返回 400，响应校验异常返回 500，路径/方法不匹配返回 404。请求体并不会因为定义了 ApiInfo 就自动被框架路由：示例服务器显式调用了 `.parse()`。
-
-```sh
-node lib/apis/greeting/example-server.js
-curl -i -X POST localhost:3001/greetings -H 'Content-Type: application/json' -d '{"name":"Ada"}'
-```
-
-终端的 `[greeting]` 日志便于和一次请求的步骤及状态码对照。此服务仅是最小教学例子，不提供生产环境的认证、限流、请求大小限制或完整错误响应格式。
+`apis/greeting/index.ts` 的 `greetingRequestSchema` 是具名 `ZodObject`；`name` 会 trim 且不能为空，`mood` 可省略并限制为两个值。`defineApiInfo` 把 POST `/greetings`、请求体、响应、摘要和标签集中描述；未指定的 `retry` 和 `requiresAuth` 明确默认为 `false`。这两个字段是给消费者的契约元数据，不会自动实现重试或鉴权。定义 ApiInfo 也不会自动注册路由或校验请求；消费方须实现 HTTP 路由并调用请求 schema 进行校验。`study-nodejs` 服务仓库提供实际的 `/greetings` 路由。
 
 ## 生成的两条路径
 
@@ -24,4 +17,4 @@ curl -i -X POST localhost:3001/greetings -H 'Content-Type: application/json' -d 
 
 ## 边界
 
-OpenAPI 描述仅包含标准 HTTP 契约，不把 `retry` / `requiresAuth` 自动映射成 OpenAPI security 或客户端执行策略。包类型入口和 `./apis` 子路径提供给消费者；示例 server 是仓库验证用编译文件，并非导出的公共子路径。GitHub Packages 的发布需要个人 token 或 CI 凭据，仓库不会保存令牌。
+OpenAPI 描述仅包含标准 HTTP 契约，不把 `retry` / `requiresAuth` 自动映射成 OpenAPI security 或客户端执行策略。包类型入口和 `./apis` 子路径提供给消费者；本仓库不提供 HTTP 服务。GitHub Packages 的发布需要个人 token 或 CI 凭据，仓库不会保存令牌。
