@@ -10,11 +10,11 @@ pnpm lint
 pnpm build
 ```
 
-本仓库只提供 API 契约与生成产物，不启动 HTTP 服务。`study-nodejs` 服务仓库消费此包并实现 `/greetings` 接口。
+本仓库只提供 API 契约与生成产物，不启动 HTTP 服务。当前没有注册具体 API；添加契约后运行构建即可生成对应类型与 OpenAPI 文档。
 
 ## 添加 API
 
-在 `apis/<feature>/` 放置请求 schema、响应 schema/类型和 `defineApiInfo` 描述，并经 `apis/index.ts` 导出。顶层导出的 `ZodObject` 必须调用 `.openapi('唯一的有效 TypeScript 标识符')`；嵌套命名 object/enum 也会生成引用类型。业务实现优先用 `z.infer<typeof schema>`，手写响应类型仅用于演示两种来源。`types/api-types.ts` 标记前可以维护 import，`// start of generated types` 后禁止手改。`common/` 只放跨 API 共享内容。
+在 `apis/<feature>/` 放置请求 schema、响应 schema/类型和 `defineApiInfo` 描述，并经 `apis/index.ts` 导出。顶层导出的 `ZodObject` 必须调用 `.openapi('唯一的有效 TypeScript 标识符')`；嵌套命名 object/enum 也会生成引用类型。业务实现优先用 `z.infer<typeof schema>`。`types/api-types.ts` 标记前可以维护 import，`// start of generated types` 后禁止手改。`common/` 只放跨 API 共享内容。
 
 ```sh
 pnpm generate:apitypes

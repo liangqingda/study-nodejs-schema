@@ -75,7 +75,7 @@ const declarations = Array.from(named, ([schema, name]) => {
 
 const auxiliary = Array.from(auxiliaryTypeStore.definitions.values(), ({ node }) => printNode(node));
 const generated = [...auxiliary, ...declarations].join('\n\n').replace(/\s*\| undefined\b/g, '');
-const next = `${original.slice(0, markerIndex + marker.length)}\n${generated}${generated ? '\n' : ''}`;
+const next = `${original.slice(0, markerIndex + marker.length)}\n${generated ? `/* eslint-disable quotes */\n${generated}` : 'export {};'}\n`;
 
 if (next !== original) {writeFileSync(target, next);}
 
