@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { OpenAPIRegistry, OpenApiGeneratorV31 } from '@asteasolutions/zod-to-openapi';
 
 import * as apis from '../apis';
-import { HttpMethodEnum, type ApiInfo } from '../apis/model/apiInfo';
+import { HttpMethodEnum, type ApiInfo } from '../apis/model/api-info';
 
 function isApiInfo(value: unknown): value is ApiInfo {
   if (typeof value !== 'object' || value === null) {return false;}

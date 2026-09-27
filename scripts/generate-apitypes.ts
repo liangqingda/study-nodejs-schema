@@ -11,7 +11,7 @@ import * as common from '../common';
 import { isZodObject } from '../common';
 
 const marker = '// start of generated types';
-const target = resolve(__dirname, '../types/apiTypes.ts');
+const target = resolve(__dirname, '../types/api-types.ts');
 const original = readFileSync(target, 'utf8');
 const markerIndex = original.indexOf(marker);
 

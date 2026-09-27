@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { defineApiInfo, HttpMethodEnum } from '../model/apiInfo';
+import { defineApiInfo, HttpMethodEnum } from '../model/api-info';
 import { greetingResponseSchema, type GreetingResponse } from './response';
 
 export const greetingRequestSchema = z.object({

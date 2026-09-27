@@ -1,4 +1,3 @@
-/* eslint-disable check-file/filename-naming-convention */
 import type { z } from 'zod';
 
 export enum HttpMethodEnum {

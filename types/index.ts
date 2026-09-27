@@ -3,4 +3,4 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
 
 extendZodWithOpenApi(z);
 
-export * from './apiTypes';
+export * from './api-types';

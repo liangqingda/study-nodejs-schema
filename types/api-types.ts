@@ -1,4 +1,4 @@
-/* eslint-disable check-file/filename-naming-convention, quotes */
+/* eslint-disable quotes */
 // start of generated types
 export type GreetingRequest = {
     name: string;
