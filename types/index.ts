@@ -1,1 +1,6 @@
-export const a = 1;
+import { z } from 'zod';
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
+
+extendZodWithOpenApi(z);
+
+export * from './apiTypes';

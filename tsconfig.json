@@ -3,7 +3,16 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "lib",
+    "baseUrl": ".",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ES2015",
+    "esModuleInterop": true,
+    "strict": true,
+    "declaration": true,
+    "sourceMap": true,
+    "ignoreDeprecations": "6.0"
   },
   "files": ["index.ts"],
-  "include": ["scripts/**/*", "types/**/*", "apis/**/*"],
+  "include": ["scripts/**/*", "types/**/*", "apis/**/*", "common/**/*"]
 }
