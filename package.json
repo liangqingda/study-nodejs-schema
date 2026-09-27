@@ -10,7 +10,12 @@
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.6.1",
+  "dependencies": {
+    "zod": "^4.6.5"
+  },
   "devDependencies": {
+    "@liangqingda/eslint-config": "^1.2.14",
+    "@liangqingda/tsconfig": "^1.0.1",
     "@types/node": "^26.6.2"
   }
 }
